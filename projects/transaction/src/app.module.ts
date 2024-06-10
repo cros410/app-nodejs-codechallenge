@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Transaction } from './transaction/models/transaction.entity';
 import { TransactionModule } from './transaction/transaction.module';
+import { TransactionResolver } from './graphql/resolvers/transaction.resolver';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: 'src/schema.gql',
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -19,5 +26,6 @@ import { TransactionModule } from './transaction/transaction.module';
     }),
     TransactionModule,
   ],
+  providers: [TransactionResolver],
 })
 export class AppModule {}

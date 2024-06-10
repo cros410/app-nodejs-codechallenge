@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { randomUUID } from 'crypto';
 import { CreateTransactionDTO } from './models/create-transaction.dto';
-import { Transaction } from './models/transaction.entity';
+import { Transaction, TransactionStatus } from './models/transaction.entity';
 import { Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
-import { TransactionStatus } from './models/transaction.model';
 import { ClientKafka } from '@nestjs/microservices';
 import { TransactionCreatedEvent } from './models/transaction-created.event';
 
@@ -19,7 +18,7 @@ export class TransationService {
 
   async create(data: CreateTransactionDTO): Promise<void> {
     const transaction = new Transaction();
-    transaction.id = uuidv4();
+    transaction.id = randomUUID();
     transaction.createdAt = new Date();
     transaction.status = TransactionStatus.PENDING;
     transaction.type = data.tranferTypeId;
