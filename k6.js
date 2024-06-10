@@ -9,15 +9,13 @@ export const options = {
   duration: '30s',
 }
 
-
-
 export default function () {
-  const url = 'http://127.0.0.1:3000/transactions'
+  const url = 'http://127.0.0.1:4000/transactions'
   const payload = JSON.stringify({
     "accountExternalIdDebit": uuidv4(),
     "accountExternalIdCredit": uuidv4(),
     "tranferTypeId": 6,
-    "value": 1
+    "value": Math.random() < 0.5 ? Math.floor(Math.random() * 1000) : Math.floor(Math.random() * 1000) + 1001
   })
 
   const params = {
