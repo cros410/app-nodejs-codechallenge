@@ -90,6 +90,7 @@ docker compose up
 
 ```sh
 cd projects/transaction/
+yarn install
 yarn start:dev
 ```
 
@@ -97,6 +98,7 @@ yarn start:dev
 
 ```sh
 cd projects/anti-fraud/
+yarn install
 yarn start:dev
 ```
 
